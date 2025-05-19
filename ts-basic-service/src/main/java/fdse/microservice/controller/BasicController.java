@@ -1,8 +1,6 @@
 package fdse.microservice.controller;
 
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import edu.fudan.common.entity.Travel;
 import fdse.microservice.service.BasicService;
 import org.slf4j.Logger;
@@ -23,32 +21,32 @@ import static org.springframework.http.ResponseEntity.ok;
 @RestController
 @RequestMapping("/api/v1/basicservice")
 
-public class BasicController extends MObject {
+public class BasicController {
 
     @Autowired
     BasicService service;
 
     private static final Logger logger = LoggerFactory.getLogger(BasicController.class);
-    @MRestApiType
+
     @GetMapping(path = "/welcome")
     public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ Basic Service ] !";
     }
+
     @PostMapping(value = "/basic/travel")
-    @MRestApiType
     public HttpEntity queryForTravel(@RequestBody Travel info, @RequestHeader HttpHeaders headers) {
         // TravelResult
         logger.info("[queryForTravel][Query for travel][Travel: {}]", info.toString());
         return ok(service.queryForTravel(info, headers));
     }
-    @MRestApiType
+
     @PostMapping(value = "/basic/travels")
     public HttpEntity queryForTravels(@RequestBody List<Travel> infos, @RequestHeader HttpHeaders headers) {
         // TravelResult
         logger.info("[queryForTravels][Query for travels][Travels: {}]", infos);
         return ok(service.queryForTravels(infos, headers));
     }
-    @MRestApiType
+
     @GetMapping(value = "/basic/{stationName}")
     public HttpEntity queryForStationId(@PathVariable String stationName, @RequestHeader HttpHeaders headers) {
         // String id

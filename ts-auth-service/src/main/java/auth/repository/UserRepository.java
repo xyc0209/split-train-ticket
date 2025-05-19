@@ -1,7 +1,6 @@
 package auth.repository;
 
 import auth.entity.User;
-import com.mbs.mclient.annotation.Loggable;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
@@ -18,8 +17,6 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param username username
      * @return Optional<User>
      */
-//    @Loggable
-    @Loggable
     Optional<User> findByUsername(String username);
 
     /**
@@ -28,6 +25,5 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param userId user id
      * @return null
      */
-//    @Loggable
     void deleteByUserId(String userId);
 }

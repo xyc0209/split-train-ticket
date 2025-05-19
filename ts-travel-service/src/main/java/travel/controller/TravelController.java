@@ -1,7 +1,5 @@
 package travel.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import edu.fudan.common.entity.TravelInfo;
 import edu.fudan.common.entity.TripAllDetailInfo;
 import edu.fudan.common.entity.TripInfo;
@@ -14,13 +12,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import edu.fudan.common.entity.TravelInfo;
-import travel.entity.*;
 import travel.service.TravelService;
-
 import java.util.ArrayList;
-
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
@@ -29,7 +22,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RestController
 @RequestMapping("/api/v1/travelservice")
 
-public class TravelController extends MObject {
+public class TravelController{
 
     @Autowired
     private TravelService travelService;
@@ -37,13 +30,11 @@ public class TravelController extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(TravelController.class);
 
     @GetMapping(path = "/welcome")
-    @MRestApiType
     public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ Travel Service ] !";
     }
 
     @GetMapping(value = "/train_types/{tripId}")
-    @MRestApiType
     public HttpEntity getTrainTypeByTripId(@PathVariable String tripId,
                                            @RequestHeader HttpHeaders headers) {
         // TrainType
@@ -52,7 +43,6 @@ public class TravelController extends MObject {
     }
 
     @GetMapping(value = "/routes/{tripId}")
-    @MRestApiType
     public HttpEntity getRouteByTripId(@PathVariable String tripId,
                                        @RequestHeader HttpHeaders headers) {
         TravelController.LOGGER.info("[getRouteByTripId][Get Route By Trip ID][TripId: {}]", tripId);
@@ -61,7 +51,6 @@ public class TravelController extends MObject {
     }
 
     @PostMapping(value = "/trips/routes")
-    @MRestApiType
     public HttpEntity getTripsByRouteId(@RequestBody ArrayList<String> routeIds,
                                         @RequestHeader HttpHeaders headers) {
         // ArrayList<ArrayList<Trip>>
@@ -71,7 +60,6 @@ public class TravelController extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/trips")
-    @MRestApiType
     public HttpEntity<?> createTrip(@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers) {
         // null
         TravelController.LOGGER.info("[create][Create trip][TripId: {}]", routeIds.getTripId());
@@ -87,7 +75,6 @@ public class TravelController extends MObject {
      */
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/trips/{tripId}")
-    @MRestApiType
     public HttpEntity retrieve(@PathVariable String tripId, @RequestHeader HttpHeaders headers) {
         // Trip
         TravelController.LOGGER.info("[retrieve][Retrieve trip][TripId: {}]", tripId);
@@ -96,7 +83,6 @@ public class TravelController extends MObject {
 
     @CrossOrigin(origins = "*")
     @PutMapping(value = "/trips")
-    @MRestApiType
     public HttpEntity updateTrip(@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers) {
         // Trip
         TravelController.LOGGER.info("[update][Update trip][TripId: {}]", info.getTripId());
@@ -105,7 +91,6 @@ public class TravelController extends MObject {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping(value = "/trips/{tripId}")
-    @MRestApiType
     public HttpEntity deleteTrip(@PathVariable String tripId, @RequestHeader HttpHeaders headers) {
         // string
         TravelController.LOGGER.info("[delete][Delete trip][TripId: {}]", tripId);
@@ -121,7 +106,6 @@ public class TravelController extends MObject {
      */
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/trips/left")
-    @MRestApiType
     public HttpEntity queryInfo(@RequestBody TripInfo info, @RequestHeader HttpHeaders headers) {
         if (info.getStartPlace() == null || info.getStartPlace().length() == 0 ||
                 info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
@@ -143,7 +127,6 @@ public class TravelController extends MObject {
      */
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/trips/left_parallel")
-    @MRestApiType
     public HttpEntity queryInfoInparallel(@RequestBody TripInfo info, @RequestHeader HttpHeaders headers) {
         if (info.getStartPlace() == null || info.getStartPlace().length() == 0 ||
                 info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
@@ -165,7 +148,6 @@ public class TravelController extends MObject {
      */
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/trip_detail")
-    @MRestApiType
     public HttpEntity getTripAllDetailInfo(@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders headers) {
         // TripAllDetailInfo
         // TripAllDetail tripAllDetail
@@ -183,7 +165,6 @@ public class TravelController extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/admin_trip")
-    @MRestApiType
     public HttpEntity adminQueryAll(@RequestHeader HttpHeaders headers) {
         // ArrayList<AdminTrip>
         TravelController.LOGGER.info("[adminQueryAll][Admin query all trips]");

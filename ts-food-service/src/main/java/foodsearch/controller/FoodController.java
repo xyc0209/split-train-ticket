@@ -1,7 +1,6 @@
 package foodsearch.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
+
 import edu.fudan.common.util.JsonUtils;
 import foodsearch.entity.*;
 import foodsearch.mq.RabbitSend;
@@ -21,7 +20,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/v1/foodservice")
-public class FoodController  extends MObject {
+public class FoodController {
 
     @Autowired
     FoodService foodService;
@@ -32,13 +31,11 @@ public class FoodController  extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(FoodController.class);
 
     @GetMapping(path = "/welcome")
-    @MRestApiType
     public String home() {
         return "Welcome to [ Food Service ] !";
     }
 
     @GetMapping(path = "/test_send_delivery")
-    @MRestApiType
     public boolean test_send_delivery() {
         Delivery delivery = new Delivery();
         delivery.setFoodName("HotPot");
@@ -52,21 +49,18 @@ public class FoodController  extends MObject {
     }
 
     @GetMapping(path = "/orders")
-    @MRestApiType
     public HttpEntity findAllFoodOrder(@RequestHeader HttpHeaders headers) {
         FoodController.LOGGER.info("[Food Service]Try to Find all FoodOrder!");
         return ok(foodService.findAllFoodOrder(headers));
     }
 
     @PostMapping(path = "/orders")
-    @MRestApiType
     public HttpEntity createFoodOrder(@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders headers) {
         FoodController.LOGGER.info("[createFoodOrder][Try to Create a FoodOrder!]");
         return ok(foodService.createFoodOrder(addFoodOrder, headers));
     }
 
     @PostMapping(path = "/createOrderBatch")
-    @MRestApiType
     public HttpEntity createFoodBatches(@RequestBody List<FoodOrder> foodOrderList, @RequestHeader HttpHeaders headers) {
         FoodController.LOGGER.info("[createFoodBatches][Try to Create Food Batches!]");
         return ok(foodService.createFoodOrdersInBatch(foodOrderList, headers));
@@ -81,14 +75,12 @@ public class FoodController  extends MObject {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @DeleteMapping(path = "/orders/{orderId}")
-    @MRestApiType
     public HttpEntity deleteFoodOrder(@PathVariable String orderId, @RequestHeader HttpHeaders headers) {
         FoodController.LOGGER.info("[deleteFoodOrder][Try to Cancel a FoodOrder!]");
         return ok(foodService.deleteFoodOrder(orderId, headers));
     }
 
     @GetMapping(path = "/orders/{orderId}")
-    @MRestApiType
     public HttpEntity findFoodOrderByOrderId(@PathVariable String orderId, @RequestHeader HttpHeaders headers) {
         FoodController.LOGGER.info("[findFoodOrderByOrderId][Try to Find FoodOrder By orderId!][orderId: {}]", orderId);
         return ok(foodService.findByOrderId(orderId, headers));
@@ -96,7 +88,6 @@ public class FoodController  extends MObject {
 
     // This relies on a lot of other services, not completely modified
     @GetMapping(path = "/foods/{date}/{startStation}/{endStation}/{tripId}")
-    @MRestApiType
     public HttpEntity getAllFood(@PathVariable String date, @PathVariable String startStation,
                                  @PathVariable String endStation, @PathVariable String tripId,
                                  @RequestHeader HttpHeaders headers) {

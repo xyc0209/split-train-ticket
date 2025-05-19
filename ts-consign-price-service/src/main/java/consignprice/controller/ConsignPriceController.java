@@ -1,9 +1,6 @@
 package consignprice.controller;
 
 
-
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import consignprice.entity.ConsignPrice;
 import consignprice.service.ConsignPriceService;
 import org.slf4j.Logger;
@@ -20,7 +17,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api/v1/consignpriceservice")
-public class ConsignPriceController  extends MObject {
+public class ConsignPriceController {
 
     @Autowired
     ConsignPriceService service;
@@ -28,13 +25,11 @@ public class ConsignPriceController  extends MObject {
     private static final Logger logger = LoggerFactory.getLogger(ConsignPriceController.class);
 
     @GetMapping(path = "/welcome")
-    @MRestApiType
     public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ ConsignPrice Service ] !";
     }
 
     @GetMapping(value = "/consignprice/{weight}/{isWithinRegion}/{consignId}")
-    @MRestApiType
     public HttpEntity getPriceByWeightAndRegion(@PathVariable String weight, @PathVariable String isWithinRegion, @PathVariable String consignId,
                                                 @RequestHeader HttpHeaders headers) {
         logger.info("[getPriceByWeightAndRegion][Get price by weight and region][weight: {}, region: {}]", weight, isWithinRegion);
@@ -43,21 +38,18 @@ public class ConsignPriceController  extends MObject {
     }
 
     @GetMapping(value = "/consignprice/price")
-    @MRestApiType
     public HttpEntity getPriceInfo(@RequestHeader HttpHeaders headers) {
         logger.info("[getPriceInfo][Get price info]");
         return ok(service.queryPriceInformation(headers));
     }
 
     @GetMapping(value = "/consignprice/config")
-    @MRestApiType
     public HttpEntity getPriceConfig(@RequestHeader HttpHeaders headers) {
         logger.info("[getPriceConfig][Get price config]");
         return ok(service.getPriceConfig(headers));
     }
 
     @PostMapping(value = "/consignprice")
-    @MRestApiType
     public HttpEntity modifyPriceConfig(@RequestBody ConsignPrice priceConfig,
                                         @RequestHeader HttpHeaders headers) {
         logger.info("[modifyPriceConfig][Create and modify price][config: {}]", priceConfig);

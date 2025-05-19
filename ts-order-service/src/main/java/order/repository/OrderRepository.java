@@ -1,6 +1,6 @@
 package order.repository;
 
-import com.mbs.mclient.annotation.Loggable;
+
 import order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
@@ -17,18 +17,15 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<Order, String> {
 
     @Override
-    @Loggable
     Optional<Order> findById(String id);
 
     @Override
-    @Loggable
     ArrayList<Order> findAll();
-    @Loggable
+
     ArrayList<Order> findByAccountId(String accountId);
-    @Loggable
+
     ArrayList<Order> findByTravelDateAndTrainNumber(String travelDate,String trainNumber);
 
     @Override
-    @Loggable
     void deleteById(String id);
 }

@@ -1,7 +1,7 @@
-FROM java:8-jre
+FROM openjdk:8-jdk-alpine
 
 
 ADD ./ts-station-food-service-1.0.jar /app/
 CMD ["java", "-Xmx200m",  "-jar", "/app/ts-station-food-service-1.0.jar"]
 
-EXPOSE 18855
+EXPOSE 8102

@@ -26,7 +26,6 @@ import java.util.Date;
 @IntegrationComponentScan
 @EnableSwagger2
 @EnableDiscoveryClient
-@ServletComponentScan("com.mbs.common.filter")
 public class ConsignPriceApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsignPriceApplication.class);

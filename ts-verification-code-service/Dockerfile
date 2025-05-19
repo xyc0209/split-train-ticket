@@ -4,4 +4,4 @@ FROM java:8-jre
 ADD ./ts-verification-code-service-1.0.jar /app/
 CMD ["java", "-Xmx200m",  "-jar", "/app/ts-verification-code-service-1.0.jar"]
 
-EXPOSE 15678
+EXPOSE 8107

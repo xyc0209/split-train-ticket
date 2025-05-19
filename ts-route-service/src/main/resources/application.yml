@@ -2,13 +2,13 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${NACOS_ADDRS:172.16.17.37:8848}
+        server-addr: ${NACOS_ADDRS:1.94.55.43:8848}
   application:
     name: ts-route-service
   datasource:
-    url: jdbc:mysql://${ROUTE_MYSQL_HOST:172.16.17.38}:${ROUTE_MYSQL_PORT:3306}/${ROUTE_MYSQL_DATABASE:ts}?useSSL=false
+    url: jdbc:mysql://${ROUTE_MYSQL_HOST:1.94.55.43}:${ROUTE_MYSQL_PORT:31306}/${ROUTE_MYSQL_DATABASE:ts}?useSSL=false
     username: ${ROUTE_MYSQL_USER:root}
-    password: ${ROUTE_MYSQL_PASSWORD:passwordA123$}
+    password: ${ROUTE_MYSQL_PASSWORD:mysql@12345}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -19,7 +19,7 @@ spring:
 
 # HTTP Server
 server:
-  port: 11178  # HTTP (Tomcat) port
+  port: 8100  # HTTP (Tomcat) port
 
 swagger:
   controllerPackage: route.controller

@@ -1,7 +1,5 @@
 package verifycode.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +20,13 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/v1/verifycode")
-public class VerifyCodeController extends MObject {
+public class VerifyCodeController{
     private static final Logger LOGGER = LoggerFactory.getLogger(VerifyCodeController.class);
 
     @Autowired
     private VerifyCodeService verifyCodeService;
 
     @GetMapping("/generate")
-
     public void imageCode(@RequestHeader HttpHeaders headers,
                           HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
@@ -49,7 +46,6 @@ public class VerifyCodeController extends MObject {
     }
 
     @GetMapping(value = "/verify/{verifyCode}")
-    @MRestApiType
     public boolean verifyCode(@PathVariable String verifyCode, HttpServletRequest request,
                               HttpServletResponse response, @RequestHeader HttpHeaders headers) {
         LOGGER.info("[verifyCode][receivedCode: {}]", verifyCode);

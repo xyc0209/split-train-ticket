@@ -1,8 +1,6 @@
 package user.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
-//import com.septemberhx.mclient.base.MObject;
+
 import edu.fudan.common.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api/v1/userservice/users")
-public class UserController extends MObject {
+public class UserController{
 
     @Autowired
     private UserService userService;
@@ -31,33 +29,28 @@ public class UserController extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/hello")
-    @MRestApiType
     public String testHello() {
         return "Hello";
     }
 
     @GetMapping
-    @MRestApiType
     public ResponseEntity<Response> getAllUser(@RequestHeader HttpHeaders headers) {
         UserController.LOGGER.info("[getAllUser][Get all user]");
         return ok(userService.getAllUsers(headers));
     }
 
     @GetMapping("/{userName}")
-    @MRestApiType
     public ResponseEntity<Response> getUserByUserName(@PathVariable String userName, @RequestHeader HttpHeaders headers) {
         UserController.LOGGER.info("[getUserByUserName][Get user by user name][UserName: {}]",userName);
         return ok(userService.findByUserName(userName, headers));
     }
     @GetMapping("/id/{userId}")
-    @MRestApiType
     public ResponseEntity<Response> getUserByUserId(@PathVariable String userId, @RequestHeader HttpHeaders headers) {
         UserController.LOGGER.info("[getUserByUserId][Get user by user id][UserId: {}]",userId);
         return ok(userService.findByUserId(userId, headers));
     }
 
     @PostMapping("/register")
-//    @MRestApiType
     public ResponseEntity<Response> registerUser(@RequestBody UserDto userDto, @RequestHeader HttpHeaders headers) {
         UserController.LOGGER.info("[registerUser][Register user][UserName: {}]",userDto.getUserName());
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userDto, headers));
@@ -65,7 +58,6 @@ public class UserController extends MObject {
 
 
     @DeleteMapping("/{userId}")
-    @MRestApiType
     public ResponseEntity<Response> deleteUserById(@PathVariable String userId,
                                                    @RequestHeader HttpHeaders headers) {
         // only admin token can delete
@@ -74,7 +66,6 @@ public class UserController extends MObject {
     }
 
     @PutMapping
-    @MRestApiType
     public ResponseEntity<Response> updateUser(@RequestBody UserDto user,
                                                @RequestHeader HttpHeaders headers) {
         UserController.LOGGER.info("[updateUser][Update user][UserId: {}]",user.getUserId());

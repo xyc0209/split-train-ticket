@@ -1,7 +1,6 @@
 package contacts.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
+
 import contacts.entity.*;
 import edu.fudan.common.util.Response;
 import org.slf4j.Logger;
@@ -20,7 +19,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api/v1/contactservice")
-public class ContactsController extends MObject {
+public class ContactsController {
 
 
     @Autowired
@@ -29,14 +28,12 @@ public class ContactsController extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContactsController.class);
 
     @GetMapping(path = "/contacts/welcome")
-    @MRestApiType
     public String home() {
         return "Welcome to [ Contacts Service ] !";
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/contacts")
-    @MRestApiType
     public HttpEntity getAllContacts(@RequestHeader HttpHeaders headers) {
         ContactsController.LOGGER.info("[getAllContacts][Get All Contacts]");
         return ok(contactsService.getAllContacts(headers));
@@ -44,7 +41,6 @@ public class ContactsController extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/contacts")
-    @MRestApiType
     public ResponseEntity<Response> createNewContacts(@RequestBody Contacts aci,
                                                       @RequestHeader HttpHeaders headers) {
         ContactsController.LOGGER.info("[createNewContacts][VerifyLogin Success]");
@@ -54,7 +50,6 @@ public class ContactsController extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/contacts/admin")
-    @MRestApiType
     public HttpEntity<?> createNewContactsAdmin(@RequestBody Contacts aci, @RequestHeader HttpHeaders headers) {
         aci.setId(UUID.randomUUID().toString());
         ContactsController.LOGGER.info("[createNewContactsAdmin][Create Contacts In Admin]");
@@ -64,7 +59,6 @@ public class ContactsController extends MObject {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping(path = "/contacts/{contactsId}")
-    @MRestApiType
     public HttpEntity deleteContacts(@PathVariable String contactsId, @RequestHeader HttpHeaders headers) {
         return ok(contactsService.delete(contactsId, headers));
     }
@@ -72,7 +66,6 @@ public class ContactsController extends MObject {
 
     @CrossOrigin(origins = "*")
     @PutMapping(path = "/contacts")
-    @MRestApiType
     public HttpEntity modifyContacts(@RequestBody Contacts info, @RequestHeader HttpHeaders headers) {
         ContactsController.LOGGER.info("[Contacts modifyContacts][Modify Contacts] ContactsId: {}", info.getId());
         return ok(contactsService.modify(info, headers));
@@ -80,7 +73,6 @@ public class ContactsController extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/contacts/account/{accountId}")
-    @MRestApiType
     public HttpEntity findContactsByAccountId(@PathVariable String accountId, @RequestHeader HttpHeaders headers) {
         ContactsController.LOGGER.info("[findContactsByAccountId][Find Contacts By Account Id][accountId: {}]", accountId);
         ContactsController.LOGGER.info("[ContactsService][VerifyLogin Success]");
@@ -89,7 +81,6 @@ public class ContactsController extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/contacts/{id}")
-    @MRestApiType
     public HttpEntity getContactsByContactsId(@PathVariable String id, @RequestHeader HttpHeaders headers) {
         ContactsController.LOGGER.info("[ContactsService][Contacts Id Print][id: {}]", id);
         ContactsController.LOGGER.info("[ContactsService][VerifyLogin Success]");

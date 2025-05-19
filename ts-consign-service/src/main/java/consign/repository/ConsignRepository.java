@@ -1,6 +1,6 @@
 package consign.repository;
 
-import com.mbs.mclient.annotation.Loggable;
+
 import consign.entity.ConsignRecord;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -20,7 +20,6 @@ public interface ConsignRepository extends CrudRepository<ConsignRecord, String>
      * @param accountId account id
      * @return ArrayList<ConsignRecord>
      */
-    @Loggable
     ArrayList<ConsignRecord> findByAccountId(String accountId);
 
     /**
@@ -29,7 +28,6 @@ public interface ConsignRepository extends CrudRepository<ConsignRecord, String>
      * @param accountId account id
      * @return ConsignRecord
      */
-    @Loggable
     ConsignRecord findByOrderId(String accountId);
 
     /**
@@ -38,7 +36,6 @@ public interface ConsignRepository extends CrudRepository<ConsignRecord, String>
      * @param consignee consignee
      * @return ArrayList<ConsignRecord>
      */
-    @Loggable
     ArrayList<ConsignRecord> findByConsignee(String consignee);
 
     /**
@@ -47,10 +44,8 @@ public interface ConsignRepository extends CrudRepository<ConsignRecord, String>
      * @param id id
      * @return ConsignRecord
      */
-    @Loggable
     Optional<ConsignRecord> findById(String id);
 
     @Override
-    @Loggable
     ConsignRecord save(ConsignRecord s);
 }

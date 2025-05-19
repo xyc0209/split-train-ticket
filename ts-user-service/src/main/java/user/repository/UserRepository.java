@@ -2,7 +2,6 @@ package user.repository;
 
 
 
-import com.mbs.mclient.annotation.Loggable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import user.entity.User;
@@ -15,13 +14,13 @@ import java.util.UUID;
  */
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
-    @Loggable
+
     User findByUserName(String userName);
-    @Loggable
+
     User findByUserId(String userId);
-    @Loggable
+
     void deleteByUserId(String userId);
+
     @Override
-    @Loggable
     List<User> findAll();
 }

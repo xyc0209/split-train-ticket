@@ -1,8 +1,6 @@
 package config.controller;
 
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import config.entity.Config;
 import config.service.ConfigService;
 import org.slf4j.Logger;
@@ -23,7 +21,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("api/v1/configservice")
-public class ConfigController extends MObject {
+public class ConfigController {
 
     @Autowired
     private ConfigService configService;
@@ -31,14 +29,12 @@ public class ConfigController extends MObject {
     private static final Logger logger = LoggerFactory.getLogger(ConfigController.class);
 
     @GetMapping(path = "/welcome")
-    @MRestApiType
     public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ Config Service ] !";
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/configs")
-    @MRestApiType
     public HttpEntity queryAll(@RequestHeader HttpHeaders headers) {
         logger.info("[queryAll][Query all configs]");
         return ok(configService.queryAll(headers));
@@ -46,7 +42,6 @@ public class ConfigController extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/configs")
-    @MRestApiType
     public HttpEntity<?> createConfig(@RequestBody Config info, @RequestHeader HttpHeaders headers) {
         logger.info("[createConfig][Create config][Config name: {}]", info.getName());
         return new ResponseEntity<>(configService.create(info, headers), HttpStatus.CREATED);
@@ -54,7 +49,6 @@ public class ConfigController extends MObject {
 
     @CrossOrigin(origins = "*")
     @PutMapping(value = "/configs")
-    @MRestApiType
     public HttpEntity updateConfig(@RequestBody Config info, @RequestHeader HttpHeaders headers) {
         logger.info("[updateConfig][Update config][Config name: {}]", info.getName());
         return ok(configService.update(info, headers));
@@ -63,7 +57,6 @@ public class ConfigController extends MObject {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping(value = "/configs/{configName}")
-    @MRestApiType
     public HttpEntity deleteConfig(@PathVariable String configName, @RequestHeader HttpHeaders headers) {
         logger.info("[deleteConfig][Delete config][configName: {}]", configName);
         return ok(configService.delete(configName, headers));
@@ -71,7 +64,6 @@ public class ConfigController extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/configs/{configName}")
-    @MRestApiType
     public HttpEntity retrieve(@PathVariable String configName, @RequestHeader HttpHeaders headers) {
         logger.info("[retrieve][Retrieve config][configName: {}]", configName);
         return ok(configService.query(configName, headers));

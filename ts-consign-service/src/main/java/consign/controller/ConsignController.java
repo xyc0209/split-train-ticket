@@ -1,8 +1,6 @@
 package consign.controller;
 
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import consign.entity.Consign;
 import consign.service.ConsignService;
 import org.slf4j.Logger;
@@ -21,7 +19,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api/v1/consignservice")
-public class ConsignController extends MObject {
+public class ConsignController {
 
     @Autowired
     ConsignService service;
@@ -29,13 +27,11 @@ public class ConsignController extends MObject {
     private static final Logger logger = LoggerFactory.getLogger(ConsignController.class);
 
     @GetMapping(path = "/welcome")
-    @MRestApiType
     public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ Consign Service ] !";
     }
 
     @PostMapping(value = "/consigns")
-    @MRestApiType
     public HttpEntity insertConsign(@RequestBody Consign request,
                                     @RequestHeader HttpHeaders headers) {
         System.out.println(request.toString());
@@ -45,7 +41,6 @@ public class ConsignController extends MObject {
     }
 
     @PutMapping(value = "/consigns")
-    @MRestApiType
     public HttpEntity updateConsign(@RequestBody Consign request, @RequestHeader HttpHeaders headers) {
         logger.info("[updateConsign][Update consign record][id: {}]", request.getId());
         System.out.println("iswithin---"+request.isWithin());
@@ -53,7 +48,6 @@ public class ConsignController extends MObject {
     }
 
     @GetMapping(value = "/consigns/account/{id}")
-    @MRestApiType
     public HttpEntity findByAccountId(@PathVariable String id, @RequestHeader HttpHeaders headers) {
         logger.info("[findByAccountId][Find consign by account id][id: {}]", id);
         UUID newid = UUID.fromString(id);
@@ -61,7 +55,6 @@ public class ConsignController extends MObject {
     }
 
     @GetMapping(value = "/consigns/order/{id}")
-    @MRestApiType
     public HttpEntity findByOrderId(@PathVariable String id, @RequestHeader HttpHeaders headers) {
         logger.info("[findByOrderId][Find consign by order id][id: {}]", id);
         UUID newid = UUID.fromString(id);
@@ -69,14 +62,12 @@ public class ConsignController extends MObject {
     }
 
     @GetMapping(value = "/consigns/{consignee}")
-    @MRestApiType
     public HttpEntity findByConsignee(@PathVariable String consignee, @RequestHeader HttpHeaders headers) {
         logger.info("[findByConsignee][Find consign by consignee][consignee: {}]", consignee);
         return ok(service.queryByConsignee(consignee, headers));
     }
 
     @GetMapping(value = "/consigns/{consignId}/{price}")
-    @MRestApiType
     public HttpEntity insertPrice(@PathVariable String consignId, @PathVariable Double price, @RequestHeader HttpHeaders headers) {
         logger.info("[insertPrice][insert price:{}]", price);
         return ok(service.insertPrice(consignId, price, headers));

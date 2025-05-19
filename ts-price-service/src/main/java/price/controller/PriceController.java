@@ -1,7 +1,6 @@
 package price.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api/v1/priceservice")
-public class PriceController extends MObject {
+public class PriceController{
 
     @Autowired
     PriceService service;
@@ -31,13 +30,11 @@ public class PriceController extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(PriceController.class);
 
     @GetMapping(path = "/prices/welcome")
-    @MRestApiType
     public String home() {
         return "Welcome to [ Price Service ] !";
     }
 
     @GetMapping(value = "/prices/{routeId}/{trainType}")
-    @MRestApiType
     public HttpEntity query(@PathVariable String routeId, @PathVariable String trainType,
                             @RequestHeader HttpHeaders headers) {
         PriceController.LOGGER.info("[findByRouteIdAndTrainType][Query price][RouteId: {}, TrainType: {}]",routeId,trainType);
@@ -45,7 +42,6 @@ public class PriceController extends MObject {
     }
 
     @PostMapping(value = "/prices/byRouteIdsAndTrainTypes")
-    @MRestApiType
     public HttpEntity query(@RequestBody List<String> ridsAndTts,
                             @RequestHeader HttpHeaders headers) {
         PriceController.LOGGER.info("[findByRouteIdAndTrainType][Query price][routeId and Train Type: {}]", ridsAndTts);
@@ -53,14 +49,12 @@ public class PriceController extends MObject {
     }
 
     @GetMapping(value = "/prices")
-    @MRestApiType
     public HttpEntity queryAll(@RequestHeader HttpHeaders headers) {
         PriceController.LOGGER.info("[findAllPriceConfig][Query all prices]");
         return ok(service.findAllPriceConfig(headers));
     }
 
     @PostMapping(value = "/prices")
-    @MRestApiType
     public HttpEntity<?> create(@RequestBody PriceConfig info,
                                 @RequestHeader HttpHeaders headers) {
         PriceController.LOGGER.info("[createNewPriceConfig][Create price][RouteId: {}, TrainType: {}]",info.getRouteId(),info.getTrainType());
@@ -68,14 +62,12 @@ public class PriceController extends MObject {
     }
 
     @DeleteMapping(value = "/prices/{pricesId}")
-    @MRestApiType
     public HttpEntity delete(@PathVariable String pricesId, @RequestHeader HttpHeaders headers) {
         PriceController.LOGGER.info("[deletePriceConfig][Delete price][PriceConfigId: {}]",pricesId);
         return ok(service.deletePriceConfig(pricesId, headers));
     }
 
     @PutMapping(value = "/prices")
-    @MRestApiType
     public HttpEntity update(@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers) {
         PriceController.LOGGER.info("[updatePriceConfig][Update price][PriceConfigId: {}]",info.getId());
         return ok(service.updatePriceConfig(info, headers));

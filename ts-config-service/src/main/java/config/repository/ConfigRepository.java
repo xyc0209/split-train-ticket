@@ -1,6 +1,5 @@
 package config.repository;
 
-import com.mbs.mclient.annotation.Loggable;
 import config.entity.Config;
 import org.springframework.data.repository.CrudRepository;
 
@@ -17,7 +16,7 @@ public interface ConfigRepository extends CrudRepository<Config, String> {
      * @param name name
      * @return Config
      */
-    @Loggable
+
     Config findByName(String name);
 
     /**
@@ -26,7 +25,6 @@ public interface ConfigRepository extends CrudRepository<Config, String> {
      * @return List<Config>
      */
     @Override
-    @Loggable
     List<Config> findAll();
 
     /**
@@ -35,6 +33,5 @@ public interface ConfigRepository extends CrudRepository<Config, String> {
      * @param name name
      * @return null
      */
-    @Loggable
     void deleteByName(String name);
 }

@@ -1,11 +1,11 @@
 server:
-  port: 18898
+  port: 8101
 
 spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${NACOS_ADDRS:172.16.17.37:8848}
+        server-addr: ${NACOS_ADDRS:1.94.55.43:8848}
   application:
     name: ts-seat-service
 

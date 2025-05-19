@@ -1,7 +1,5 @@
 package fdse.microservice.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import edu.fudan.common.util.Response;
 import fdse.microservice.entity.*;
 import fdse.microservice.service.StationService;
@@ -20,35 +18,35 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/v1/stationservice")
-public class StationController  extends MObject {
+public class StationController {
 
     @Autowired
     private StationService stationService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StationController.class);
-    @MRestApiType
+
     @GetMapping(path = "/welcome")
     public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ Station Service ] !";
     }
-    @MRestApiType
+
     @GetMapping(value = "/stations")
     public HttpEntity query(@RequestHeader HttpHeaders headers) {
         return ok(stationService.query(headers));
     }
-    @MRestApiType
+
     @PostMapping(value = "/stations")
     public ResponseEntity<Response> create(@RequestBody Station station, @RequestHeader HttpHeaders headers) {
         StationController.LOGGER.info("[create][Create station][name: {}]",station.getName());
         return new ResponseEntity<>(stationService.create(station, headers), HttpStatus.CREATED);
     }
-    @MRestApiType
+
     @PutMapping(value = "/stations")
     public HttpEntity update(@RequestBody Station station, @RequestHeader HttpHeaders headers) {
         StationController.LOGGER.info("[update][Update station][StationId: {}]",station.getId());
         return ok(stationService.update(station, headers));
     }
-    @MRestApiType
+
     @DeleteMapping(value = "/stations/{stationsId}")
     public ResponseEntity<Response> delete(@PathVariable String stationsId, @RequestHeader HttpHeaders headers) {
         StationController.LOGGER.info("[delete][Delete station][StationId: {}]",stationsId);
@@ -58,7 +56,6 @@ public class StationController  extends MObject {
 
 
     // according to station name ---> query station id
-    @MRestApiType
     @GetMapping(value = "/stations/id/{stationNameForId}")
     public HttpEntity queryForStationId(@PathVariable(value = "stationNameForId")
                                         String stationName, @RequestHeader HttpHeaders headers) {
@@ -68,7 +65,6 @@ public class StationController  extends MObject {
     }
 
     // according to station name list --->  query all station ids
-    @MRestApiType
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/stations/idlist")
     public HttpEntity queryForIdBatch(@RequestBody List<String> stationNameList, @RequestHeader HttpHeaders headers) {
@@ -77,7 +73,6 @@ public class StationController  extends MObject {
     }
 
     // according to station id ---> query station name
-    @MRestApiType
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/stations/name/{stationIdForName}")
     public HttpEntity queryById(@PathVariable(value = "stationIdForName")
@@ -88,7 +83,6 @@ public class StationController  extends MObject {
     }
 
     // according to station id list  ---> query all station names
-    @MRestApiType
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/stations/namelist")
     public HttpEntity queryForNameBatch(@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers) {

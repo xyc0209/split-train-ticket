@@ -1,7 +1,7 @@
 package route.repository;
 
 
-import com.mbs.mclient.annotation.Loggable;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -22,7 +22,7 @@ public interface RouteRepository extends CrudRepository<Route, String> {
      * @param id id
      * @return Route
      */
-    @Loggable
+
     Optional<Route> findById(String id);
 
     /**
@@ -32,7 +32,6 @@ public interface RouteRepository extends CrudRepository<Route, String> {
      * @return Route
      */
     @Query(value="SELECT * from route where id in ?1", nativeQuery = true)
-    @Loggable
     List<Route> findByIds(List<String> ids);
 
     /**
@@ -41,7 +40,6 @@ public interface RouteRepository extends CrudRepository<Route, String> {
      * @return ArrayList<Route>
      */
     @Override
-    @Loggable
     ArrayList<Route> findAll();
 
     /**
@@ -49,7 +47,7 @@ public interface RouteRepository extends CrudRepository<Route, String> {
      *
      * @param id id
      */
-    @Loggable
+
     void removeRouteById(String id);
 
     /**
@@ -59,7 +57,7 @@ public interface RouteRepository extends CrudRepository<Route, String> {
      * @param endStation  end Station Name
      * @return ArrayList<Route>
      */
-    @Loggable
+
     ArrayList<Route> findByStartStationAndEndStation(String startStation, String endStation);
 
 }

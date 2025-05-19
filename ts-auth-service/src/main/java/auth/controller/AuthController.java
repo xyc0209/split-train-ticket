@@ -2,8 +2,6 @@ package auth.controller;
 
 import auth.dto.AuthDto;
 import auth.service.UserService;
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import edu.fudan.common.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/v1/auth")
-public class AuthController extends MObject {
+public class AuthController{
 
     @Autowired
     private UserService userService;
@@ -31,13 +29,11 @@ public class AuthController extends MObject {
      * @return
      */
     @GetMapping("/hello")
-    @MRestApiType
     public String getHello() {
         return "hello";
     }
 
     @PostMapping
-    @MRestApiType
     public HttpEntity<Response> createDefaultUser(@RequestBody AuthDto authDto) {
         logger.info("[createDefaultUser][Create default auth user with authDto][AuthDto: {}]", authDto.toString());
         userService.createDefaultAuthUser(authDto);

@@ -1,17 +1,17 @@
 server:
-  port: 12347
+  port: 8095
 
 spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${NACOS_ADDRS:172.16.17.37:8848}
+        server-addr: ${NACOS_ADDRS:1.94.55.43:8848}
   application:
     name: ts-contacts-service
   datasource:
-    url: jdbc:mysql://${CONTACTS_MYSQL_HOST:172.16.17.38}:${CONTACTS_MYSQL_PORT:3306}/${CONTACTS_MYSQL_DATABASE:ts_contacts_mysql}?useSSL=false
+    url: jdbc:mysql://${CONTACTS_MYSQL_HOST:1.94.55.43}:${CONTACTS_MYSQL_PORT:31306}/${CONTACTS_MYSQL_DATABASE:ts_contacts_mysql}?useSSL=false
     username: ${CONTACTS_MYSQL_USER:root}
-    password: ${CONTACTS_MYSQL_PASSWORD:passwordA123$}
+    password: ${CONTACTS_MYSQL_PASSWORD:mysql@12345}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

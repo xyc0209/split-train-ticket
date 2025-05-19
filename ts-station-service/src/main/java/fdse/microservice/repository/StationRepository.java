@@ -1,6 +1,6 @@
 package fdse.microservice.repository;
 
-import com.mbs.mclient.annotation.Loggable;
+
 import fdse.microservice.entity.Station;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,12 +13,12 @@ import java.util.Optional;
 public interface StationRepository extends CrudRepository<Station,String> {
 
     Station findByName(String name);
-    @Loggable
+
     @Query(value="SELECT * from station where name in ?1", nativeQuery = true)
     List<Station> findByNames(List<String> names);
-    @Loggable
+
     Optional<Station> findById(String id);
-    @Loggable
+
     @Override
     List<Station> findAll();
 }

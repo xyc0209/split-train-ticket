@@ -1,7 +1,5 @@
 package food.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
 import food.service.StationFoodService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +14,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/v1/stationfoodservice")
-public class StationFoodController  extends MObject {
+public class StationFoodController{
 
     @Autowired
     StationFoodService stationFoodService;
@@ -24,14 +22,12 @@ public class StationFoodController  extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(StationFoodController.class);
 
     @GetMapping(path = "/stationfoodstores/welcome")
-    @MRestApiType
     public String home() {
         return "Welcome to [ Food store Service ] !";
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/stationfoodstores")
-    @MRestApiType
     public HttpEntity getAllFoodStores(@RequestHeader HttpHeaders headers) {
         StationFoodController.LOGGER.info("[Food Map Service][Get All FoodStores]");
         return ok(stationFoodService.listFoodStores(headers));
@@ -39,7 +35,6 @@ public class StationFoodController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/stationfoodstores/{stationId}")
-    @MRestApiType
     public HttpEntity getFoodStoresOfStation(@PathVariable String stationName, @RequestHeader HttpHeaders headers) {
         StationFoodController.LOGGER.info("[Food Map Service][Get FoodStores By StationName]");
         return ok(stationFoodService.listFoodStoresByStationName(stationName, headers));
@@ -47,13 +42,12 @@ public class StationFoodController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/stationfoodstores")
-    @MRestApiType
     public HttpEntity getFoodStoresByStationNames(@RequestBody List<String> stationNameList) {
         StationFoodController.LOGGER.info("[Food Map Service][Get FoodStores By StationNames]");
         return ok(stationFoodService.getFoodStoresByStationNames(stationNameList));
     }
+
     @GetMapping("/stationfoodstores/bystoreid/{stationFoodStoreId}")
-    @MRestApiType
     public HttpEntity getFoodListByStationFoodStoreId(@PathVariable String stationFoodStoreId, @RequestHeader HttpHeaders headers) {
         StationFoodController.LOGGER.info("[Food Map Service][Get Foodlist By stationFoodStoreId]");
         return ok(stationFoodService.getStaionFoodStoreById(stationFoodStoreId));

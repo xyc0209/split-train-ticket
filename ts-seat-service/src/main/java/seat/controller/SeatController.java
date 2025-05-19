@@ -1,7 +1,6 @@
 package seat.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api/v1/seatservice")
-public class SeatController  extends MObject {
+public class SeatController {
 
     @Autowired
     private SeatService seatService;
@@ -26,7 +25,6 @@ public class SeatController  extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(SeatController.class);
 
     @GetMapping(path = "/welcome")
-    @MRestApiType
     public String home() {
         return "Welcome to [ Seat Service ] !";
     }
@@ -40,7 +38,6 @@ public class SeatController  extends MObject {
      */
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/seats")
-    @MRestApiType
     public HttpEntity create(@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers) {
         SeatController.LOGGER.info("[distributeSeat][Create seat][TravelDate: {},TrainNumber: {},SeatType: {}]",seatRequest.getTravelDate(),seatRequest.getTrainNumber(),seatRequest.getSeatType());
         return ok(seatService.distributeSeat(seatRequest, headers));
@@ -56,7 +53,6 @@ public class SeatController  extends MObject {
      */
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/seats/left_tickets")
-    @MRestApiType
     public HttpEntity getLeftTicketOfInterval(@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers) {
         // int
         SeatController.LOGGER.info("[getLeftTicketOfInterval][Get left ticket of interval][TravelDate: {},TrainNumber: {},SeatType: {}]",seatRequest.getTravelDate(),seatRequest.getTrainNumber(),seatRequest.getSeatType());

@@ -1,7 +1,6 @@
 package order.controller;
 
-import com.mbs.mclient.annotation.MRestApiType;
-import com.mbs.mclient.base.MObject;
+
 import edu.fudan.common.entity.Seat;
 import edu.fudan.common.util.StringUtils;
 import order.entity.*;
@@ -22,7 +21,7 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api/v1/orderservice")
-public class OrderController  extends MObject {
+public class OrderController {
 
     @Autowired
     private OrderService orderService;
@@ -30,7 +29,6 @@ public class OrderController  extends MObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     @GetMapping(path = "/welcome")
-    @MRestApiType
     public String home() {
         return "Welcome to [ Order Service ] !";
     }
@@ -38,7 +36,6 @@ public class OrderController  extends MObject {
     /***************************For Normal Use***************************/
 
     @PostMapping(value = "/order/tickets")
-    @MRestApiType
     public HttpEntity getTicketListByDateAndTripId(@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[getSoldTickets][Get Sold Ticket][Travel Date: {}]", seatRequest.getTravelDate().toString());
         return ok(orderService.getSoldTickets(seatRequest, headers));
@@ -46,7 +43,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/order")
-    @MRestApiType
     public HttpEntity createNewOrder(@RequestBody Order createOrder, @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[createNewOrder][Create Order][from {} to {} at {}]", createOrder.getFrom(), createOrder.getTo(), createOrder.getTravelDate());
         return ok(orderService.create(createOrder, headers));
@@ -54,14 +50,12 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/order/admin")
-    @MRestApiType
     public HttpEntity addcreateNewOrder(@RequestBody Order order, @RequestHeader HttpHeaders headers) {
         return ok(orderService.addNewOrder(order, headers));
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/order/query")
-    @MRestApiType
     public HttpEntity queryOrders(@RequestBody OrderInfo qi,
                                   @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[queryOrders][Query Orders][for LoginId :{}]", qi.getLoginId());
@@ -70,7 +64,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/order/refresh")
-    @MRestApiType
     public HttpEntity queryOrdersForRefresh(@RequestBody OrderInfo qi,
                                             @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[queryOrdersForRefresh][Query Orders][for LoginId:{}]", qi.getLoginId());
@@ -79,7 +72,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/order/{travelDate}/{trainNumber}")
-    @MRestApiType
     public HttpEntity calculateSoldTicket(@PathVariable String travelDate, @PathVariable String trainNumber,
                                           @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[queryAlreadySoldOrders][Calculate Sold Tickets][Date: {} TrainNumber: {}]", travelDate, trainNumber);
@@ -88,7 +80,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/order/price/{orderId}")
-    @MRestApiType
     public HttpEntity getOrderPrice(@PathVariable String orderId, @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[getOrderPrice][Get Order Price][OrderId: {}]", orderId);
         // String
@@ -98,7 +89,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/order/orderPay/{orderId}")
-    @MRestApiType
     public HttpEntity payOrder(@PathVariable String orderId, @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[payOrder][Pay Order][OrderId: {}]", orderId);
         // Order
@@ -107,7 +97,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/order/{orderId}")
-    @MRestApiType
     public HttpEntity getOrderById(@PathVariable String orderId, @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[getOrderById][Get Order By Id][OrderId: {}]", orderId);
         // Order
@@ -116,7 +105,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/order/status/{orderId}/{status}")
-    @MRestApiType
     public HttpEntity modifyOrder(@PathVariable String orderId, @PathVariable Integer status, @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[modifyOrder][Modify Order Status][OrderId: {}]", orderId);
         // Order
@@ -126,7 +114,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/order/security/{checkDate}/{accountId}")
-    @MRestApiType
     public HttpEntity securityInfoCheck(@PathVariable String checkDate, @PathVariable String accountId,
                                         @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[checkSecurityAboutOrder][Security Info Get][AccountId:{}]", accountId);
@@ -136,7 +123,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @PutMapping(path = "/order")
-    @MRestApiType
     public HttpEntity saveOrderInfo(@RequestBody Order orderInfo,
                                     @RequestHeader HttpHeaders headers) {
 
@@ -146,7 +132,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @PutMapping(path = "/order/admin")
-    @MRestApiType
     public HttpEntity updateOrder(@RequestBody Order order, @RequestHeader HttpHeaders headers) {
         // Order
         OrderController.LOGGER.info("[updateOrder][Update Order][OrderId: {}]", order.getId());
@@ -156,7 +141,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping(path = "/order/{orderId}")
-    @MRestApiType
     public HttpEntity deleteOrder(@PathVariable String orderId, @RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[deleteOrder][Delete Order][OrderId: {}]", orderId);
         // Order
@@ -167,7 +151,6 @@ public class OrderController  extends MObject {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/order")
-    @MRestApiType
     public HttpEntity findAllOrder(@RequestHeader HttpHeaders headers) {
         OrderController.LOGGER.info("[getAllOrders][Find All Order]");
         // ArrayList<Order>
